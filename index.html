@@ -1,12 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./styles.css">
+  <title>Registro de Clientes</title>
 </head>
+
 <body>
-    <script src="./app.js"></script>  
+
+  <div>
+    <h1>Bienvenidos A RED MEDUSA</h1>
+    <label class="label" for="opcion">Elige una opción:</label>
+    <select class="btn" id="opcion">
+      <option value="a">Wifi</option>
+      <option value="b">Fibra</option>
+    </select>
+    <button class="btn" id="comenzar">Comenzar</button>
+  </div>
+
+  <div id="formulario" style="display: none;">
+    <h2>Ingrese sus datos</h2>
+    <div class="imput">
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre"><br>
+      <label for="apellido">Apellido:</label>
+      <input type="text" id="apellido"><br>
+      <label for="edad">Edad:</label>
+      <input type="number" id="edad"><br>
+      <label for="direccion">Dirección:</label>
+      <input type="text" id="direccion"><br>
+      <button class="btn" id="agregar">Agregar Cliente</button>
+      <button class="btn" id="finalizar">Finalizar Registro</button>
+    </div>
+  </div>
+  <div  id="resultado" style="display: none;">
+    <h2>Clientes Registrados</h2>
+    <pre class="resultado" id="clientes"></pre>
+    <p class="resultado"id="total"></p>
+  </div>
+  <script src="app.js"></script>
 </body>
+
 </html>
