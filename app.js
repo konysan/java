@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
     comenzarButton.disabled = true;
   });
 
-  let clientes = loadClientesFromLocalStorage() || [];
+  let clientes = [];
 
   agregarButton.addEventListener("click", function () {
     let cliente = {
@@ -37,20 +37,23 @@ document.addEventListener("DOMContentLoaded", function () {
     };
     clientes.push(cliente);
     limpiarFormulario();
-    saveClientesToLocalStorage(clientes);
-    saveClientesToServer(cliente);
   });
 
-  agregarButton.addEventListener("click", function () {
+  finalizarButton.addEventListener("click", function () {
     resultadoDiv.style.display = "block";
     mostrarClientes(clientes);
     totalP.textContent = "Total de clientes: " + clientes.length;
-  });
-  finalizarButton.addEventListener("click", function () {
-    resultadoDiv.style.display = "block";
-   
+
+    
+    localStorage.setItem("clientes", JSON.stringify(clientes));
   });
 
+  
+  if (localStorage.getItem("clientes")) {
+    clientes = JSON.parse(localStorage.getItem("clientes"));
+    mostrarClientes(clientes);
+    totalP.textContent = "Total de clientes: " + clientes.length;
+  }
 
   function obtenerTipo(codigo) {
     return opciones.find((opcion) => opcion.codigo === codigo).tipo;
@@ -82,29 +85,12 @@ document.addEventListener("DOMContentLoaded", function () {
     clientesPre.textContent = mensaje;
   }
 
-  function saveClientesToLocalStorage(data) {
-    localStorage.setItem("clientes", JSON.stringify(data));
-  }
-
-  function loadClientesFromLocalStorage() {
-    const data = localStorage.getItem("clientes");
-    return JSON.parse(data);
-  }
-
-  function saveClientesToServer(cliente) {
-    fetch("url_del_servidor", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(cliente),
+  fetch('datos.json')
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
     })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Cliente enviado al servidor:", data);
-      })
-      .catch((error) => {
-        console.error("Error al enviar el cliente al servidor:", error);
-      });
-  }
+    .catch((error) => {
+      console.error("Error al cargar el JSON: ", error);
+    });
 });
