@@ -13,10 +13,12 @@ document.addEventListener("DOMContentLoaded", function () {
   const direccionInput = document.getElementById("direccion");
   const agregarButton = document.getElementById("agregar");
   const finalizarButton = document.getElementById("finalizar");
+  const antesButton = document.getElementById("antes");
   const resultadoDiv = document.getElementById("resultado");
   const clientesPre = document.getElementById("clientes");
   const totalP = document.getElementById("total");
-  const contenedordatos = document.querySelector("container")
+  const containerDiv = document.getElementById("container");
+  const contenedordatos = document.querySelector("#container");
   let elejir = "";
 
   comenzarButton.addEventListener("click", function () {
@@ -43,12 +45,18 @@ document.addEventListener("DOMContentLoaded", function () {
     resultadoDiv.style.display = "block";
     mostrarClientes(clientes);
     totalP.textContent = "Total de clientes: " + clientes.length;
-
-    
     localStorage.setItem("clientes", JSON.stringify(clientes));
   });
 
-  
+  antesButton.addEventListener("click", function () {
+    containerDiv.style.display = "block";
+    fetch("datos.json")
+      .then((response) => response.json())
+      .then((data) => {
+        mostrarJson(data);
+      });
+  });
+
   if (localStorage.getItem("clientes")) {
     clientes = JSON.parse(localStorage.getItem("clientes"));
     mostrarClientes(clientes);
@@ -85,20 +93,15 @@ document.addEventListener("DOMContentLoaded", function () {
     clientesPre.textContent = mensaje;
   }
 
-  fetch('datos.json')
-    .then((response) => response.json())
-    .then((data) => {mostrarJson(data);});
-   
-function mostrarJson(datos)
-{ 
-  //console.log(datos)
-datos.forEach(dat => {
-  let card = document.createElement ('div');
-  card.innerHTML = `<p>${datos.nombre}</p>`
-  contenedordatos.appendChild(card);
-
-})
-
-
-}
+  function mostrarJson(datos) {
+    datos.forEach((datos) => {
+      let card = document.createElement("div");
+       card.innerHTML = `<p>${"Nombre = " + datos.nombre}</p>
+        <p>${"Apellido = " + datos.apellido}</p>
+        <p>${"Años = " + datos.años}</p>
+        <p>${"Direccion = " + datos.direccion}</p>
+        <p>${"--------------" + datos.espacio}</p>`;
+      contenedordatos.appendChild(card);
+    });
+  }
 });
