@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const resultadoDiv = document.getElementById("resultado");
   const clientesPre = document.getElementById("clientes");
   const totalP = document.getElementById("total");
-
+  const contenedordatos = document.querySelector("container")
   let elejir = "";
 
   comenzarButton.addEventListener("click", function () {
@@ -87,10 +87,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
   fetch('datos.json')
     .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-    })
-    .catch((error) => {
-      console.error("Error al cargar el JSON: ", error);
-    });
+    .then((data) => {mostrarJson(data);});
+   
+function mostrarJson(datos)
+{ 
+  //console.log(datos)
+datos.forEach(dat => {
+  let card = document.createElement ('div');
+  card.innerHTML = `<p>${datos.nombre}</p>`
+  contenedordatos.appendChild(card);
+
+})
+
+
+}
 });

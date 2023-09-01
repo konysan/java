@@ -1,6 +1,6 @@
 [
     {
-      "nombre": "jose",
+      "nombre" : "jose",
       "apellido": "roca",
       "años": "22",
       "Direccion": "casa"
